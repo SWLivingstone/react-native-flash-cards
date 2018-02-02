@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { getDecks } from '../helpers/AsyncHelpers'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+import { Button } from 'react-native-elements'
 
 class ShowDecks extends Component {
 
@@ -9,10 +10,15 @@ class ShowDecks extends Component {
       <View style={styles.container}>
         {this.props.screenProps.decks.map((deck, index) => {
           return (
-            <Text key={`${deck}${index}`}>{deck}</Text>
+            <Button
+              large
+              key={`${deck}${index}`}
+              icon={{name: 'folder'}}
+              buttonStyle={styles.deckButton}
+              title={deck}
+              onPress={() => {this.props.navigation.navigate('DeckView', {deck: deck})}}/>
           )
         })}
-        <Text>Show Decks</Text>
       </View>
     );
   }
@@ -23,8 +29,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
+  deckButton: {
+    width: 250,
+    margin: 5
+  }
 });
 
 export default ShowDecks

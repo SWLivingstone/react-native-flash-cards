@@ -14,7 +14,7 @@ class AddDeck extends Component {
 
   handleSubmit() {
     this.setState({title: ''})
-    this.props.screenProps.handleSubmit(this.state.title)
+    this.props.screenProps.handleAddDeck(this.state.title)
   }
 
   render() {
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
