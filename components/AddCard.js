@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { saveDeckTitle, getDecks } from '../helpers/AsyncHelpers'
+import { StyleSheet, View } from 'react-native'
 import { FormLabel, FormInput, Button } from 'react-native-elements'
-import { addCard } from '../helpers/AsyncHelpers'
 
 class AddCard extends Component {
   state = {
@@ -48,7 +46,7 @@ class AddCard extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fffeee',
+    backgroundColor: '#fff',
     alignItems: 'center',
     margin: 10,
     padding: 10,

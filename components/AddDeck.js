@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { saveDeckTitle, getDecks } from '../helpers/AsyncHelpers'
+import { StyleSheet, View } from 'react-native'
 import { FormLabel, FormInput, Button } from 'react-native-elements'
 
 class AddDeck extends Component {
@@ -35,7 +34,6 @@ class AddDeck extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
 });

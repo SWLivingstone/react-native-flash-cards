@@ -1,27 +1,17 @@
 import React, { Component } from 'react'
-import { getDecks } from '../helpers/AsyncHelpers'
+import { clearLocalNotification, setLocalNotification } from '../helpers/AsyncHelpers'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
-import { addCard } from '../helpers/AsyncHelpers'
-import AddCard from './AddCard'
 
 class Quiz extends Component {
   state = {
-    cards: [],
     toggle: 'question',
     currentCard: 0,
-    numCorret: 0,
-    numWrong: 0
+    numCorrect: 0,
   }
 
   deck = this.props.navigation.state.params.deck
-
-  componentDidMount() {
-    getDecks().then((decks) => {
-      decks = JSON.parse(decks)
-      this.setState({ cards: decks[this.deck] })
-    })
-  }
+  cards = this.props.navigation.state.params.cards
 
   handleToggle() {
     this.setState({
@@ -29,21 +19,66 @@ class Quiz extends Component {
     })
   }
 
+  handleAnswer(answer) {
+    const numCorrect = answer === 'correct' ?
+      this.state.numCorrect + 1 :
+      this.state.numCorrect
+    const currentCard = this.state.currentCard + 1
+
+    this.setState({currentCard: currentCard,
+                   numCorrect: numCorrect})
+
+    if (currentCard >= this.cards.length) {
+      clearLocalNotification()
+        .then(setLocalNotification)
+    }
+  }
+
+  quizInProgress() {
+    if (this.state.currentCard >= this.cards.length)
+      return false
+    else
+      return true
+  }
+
+  score() {
+    score = this.state.numCorrect / this.cards.length
+    return score * 100
+  }
+
   render() {
     return (
-      this.state.cards.length > 0 &&
+      Array.isArray(this.cards) && this.quizInProgress() &&
         <View style={styles.container}>
+          <Text>{this.state.currentCard}/{this.cards.length}</Text>
           <Text style={styles.activeText}>
-            {this.state.toggle === 'question' ?
-              this.state.cards[this.state.currentCard].question :
-              this.state.cards[this.state.currentCard].answer}
+            {this.cards[this.state.currentCard][this.state.toggle]}
           </Text>
           <Button
+            buttonStyle={styles.toggle}
             onPress={() => {this.handleToggle()}}
             title={this.state.toggle === 'question' ? 'show answer' : 'show question'}/>
           <Button
-          />
+            buttonStyle={styles.correct}
+            onPress={() => {this.handleAnswer('correct')}}
+            title='Correct'/>
+          <Button
+            buttonStyle={styles.wrong}
+            onPress={() => {this.handleAnswer('wrong')}}
+            title='Wrong'/>
         </View>
+
+      || this.quizInProgress() === false &&
+        <View style={styles.container}>
+          <Text>Quiz complete</Text>
+          <Text>Your score is {this.score()}%</Text>
+        </View>
+
+      ||
+        <View style={styles.container}>
+          <Text>This Quiz has no cards</Text>
+        </View>
+
     );
   }
 }
@@ -52,17 +87,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   activeText: {
     fontSize: 30,
     marginTop: 30
   },
-  startButton: {
-
+  toggle: {
+    margin: 10,
   },
-  addCardButton: {
-
+  correct: {
+    margin: 10,
+    backgroundColor: '#0CC200'
+  },
+  wrong: {
+    margin: 10,
+    backgroundColor: '#C2000C'
   }
 });
 

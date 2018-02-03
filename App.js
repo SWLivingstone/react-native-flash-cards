@@ -1,31 +1,41 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { saveDeckTitle, getDecks } from './helpers/AsyncHelpers'
+import { saveDeckTitle, getDecks, addCard, setLocalNotification } from './helpers/AsyncHelpers'
 import ShowDecks from './components/ShowDecks'
 import AddDeck from './components/AddDeck'
 import DeckView from './components/DeckView'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
-import Constants from 'expo'
 
 class App extends Component {
   state = {
-    decks: []
+    deckNames: [],
+    cards: {}
   }
 
   componentDidMount() {
+    setLocalNotification()
     getDecks().then(decks => {
-      this.setState({ decks: Object.keys(JSON.parse(decks)).map((key) => key) })
+      this.setState({ deckNames: Object.keys(JSON.parse(decks)).map((key) => key),
+                      cards: JSON.parse(decks) })
     })
   }
 
   handleAddDeck(title) {
     saveDeckTitle(title)
     this.setState((state) => {
-      return { decks: [...state.decks, title] }
+      return { deckNames: [...state.decks, title] }
     })
-    getDecks().then((result) => console.log(result))
+  }
+
+  handleAddCard(deck, newCard) {
+    temp = this.state.cards
+    temp[deck] = [...temp[deck], newCard]
+    this.setState({
+      cards: temp
+    })
+    addCard(deck, newCard)
   }
 
   render() {
@@ -33,17 +43,15 @@ class App extends Component {
       <View style={{flex: 1}}>
         <Stack
           screenProps={{
-            decks: this.state.decks,
-            handleAddDeck: (title) => {this.handleAddDeck(title)}
+            deckNames: this.state.deckNames,
+            cards: this.state.cards,
+            handleAddDeck: (title) => {this.handleAddDeck(title)},
+            handleAddCard: (deck, newCard) => {this.handleAddCard(deck, newCard)}
           }}/>
       </View>
     );
   }
 }
-
-const statusBar = Constants.statusBarHeight ?
-                  Constants.statusBarHeight :
-                  24
 
 const Tabs = TabNavigator({
   'My Decks': {
