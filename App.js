@@ -6,6 +6,7 @@ import ShowDecks from './components/ShowDecks'
 import AddDeck from './components/AddDeck'
 import DeckView from './components/DeckView'
 import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 import Constants from 'expo'
 
 class App extends Component {
@@ -70,6 +71,12 @@ const Stack = StackNavigator({
     screen: AddCard,
     navigationOptions: {
       title: 'Add New Card'
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz'
     }
   }
 })

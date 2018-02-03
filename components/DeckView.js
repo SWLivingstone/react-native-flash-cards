@@ -16,7 +16,6 @@ class DeckView extends Component {
   componentDidMount() {
     getDecks().then((decks) => {
       decks = JSON.parse(decks)
-      console.log(decks[this.deck])
       this.setState({ cards: decks[this.deck],
                       numCards: decks[this.deck].length})
     })
@@ -36,15 +35,17 @@ class DeckView extends Component {
         <Text>{this.deck} {this.state.numCards}</Text>
         <Button
           title='Start Quiz'
-          buttonStyle={styles.startButton}/>
-          <Button
-            large
-            icon={{name: 'add-box'}}
-            buttonStyle={styles.addCardButton}
-            title='Add Card'
-            onPress={() => {this.props.navigation.navigate('AddCard',
-              { deck: this.deck,
-                handleAddCard: (newCard) => this.handleAddCard(newCard) })}}/>
+          buttonStyle={styles.startButton}
+          onPress={() => {this.props.navigation.navigate('Quiz',
+            { deck: this.deck })}}/>
+        <Button
+          large
+          icon={{name: 'add-box'}}
+          buttonStyle={styles.addCardButton}
+          title='Add Card'
+          onPress={() => {this.props.navigation.navigate('AddCard',
+            { deck: this.deck,
+              handleAddCard: (newCard) => this.handleAddCard(newCard) })}}/>
         {Array.isArray(this.state.cards) && this.state.cards.map((card) => {
           return(
             <View>
