@@ -24,9 +24,9 @@ class App extends Component {
 
   handleAddDeck(title) {
     saveDeckTitle(title)
-    this.setState((state) => {
-      return { deckNames: [...state.decks, title] }
-    })
+    this.setState((state) => ({
+      deckNames: [...state.deckNames, title]
+    }))
   }
 
   handleAddCard(deck, newCard) {

@@ -17,7 +17,7 @@ class ShowDecks extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.props.screenProps.deckNames.map((deck, index) => {
+        {this.props.screenProps.deckNames.length > 0 && this.props.screenProps.deckNames.map((deck, index) => {
           return (
             <Button
               large

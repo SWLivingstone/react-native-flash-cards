@@ -1,3 +1,15 @@
+# Getting Started!
+
+This app was bundled with yarn so for best results please use yarn and not npm
+
+1. clone the repository
+2. run yarn install
+3. run yarn start
+4. use emulator of your choice
+
+*I have left the default README for create-react-native-app below for referance*
+
+
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
