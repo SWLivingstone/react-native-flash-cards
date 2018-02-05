@@ -11,7 +11,7 @@ import Quiz from './components/Quiz'
 class App extends Component {
   state = {
     deckNames: [],
-    cards: {}
+    cards: []
   }
 
   componentDidMount() {
@@ -25,7 +25,8 @@ class App extends Component {
   handleAddDeck(title) {
     saveDeckTitle(title)
     this.setState((state) => ({
-      deckNames: [...state.deckNames, title]
+      deckNames: [...state.deckNames, title],
+      cards: {...state.cards, [title]: []}
     }))
   }
 

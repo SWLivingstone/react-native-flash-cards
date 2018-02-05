@@ -1,6 +1,7 @@
 # Getting Started!
 
-This app was bundled with yarn so for best results please use yarn and not npm
+This app was bundled with yarn so for best results please use yarn and not npm.
+It has been tested on andorid using the expo app on a samsung galaxy s7
 
 1. clone the repository
 2. run yarn install

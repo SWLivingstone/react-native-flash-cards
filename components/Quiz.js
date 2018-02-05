@@ -34,6 +34,14 @@ class Quiz extends Component {
     }
   }
 
+  handleReset() {
+    this.setState({
+      toggle: 'question',
+      currentCard: 0,
+      numCorrect: 0
+    })
+  }
+
   quizInProgress() {
     if (this.state.currentCard >= this.cards.length)
       return false
@@ -72,6 +80,14 @@ class Quiz extends Component {
         <View style={styles.container}>
           <Text>Quiz complete</Text>
           <Text>Your score is {this.score()}%</Text>
+          <Button
+            buttonStyle={styles.toggle}
+            onPress={() => {this.handleReset()}}
+            title='Restart Quiz'/>
+          <Button
+            buttonStyle={styles.toggle}
+            onPress={() => {this.props.navigation.goBack()}}
+            title='Return to Deck'/>
         </View>
 
       ||

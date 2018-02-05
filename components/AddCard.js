@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { FormLabel, FormInput, Button } from 'react-native-elements'
 
 class AddCard extends Component {
@@ -27,7 +27,7 @@ class AddCard extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <FormLabel>Question</FormLabel>
         <FormInput
           onChangeText={(event) => {this.handleInputQuestion(event)}}
@@ -39,7 +39,7 @@ class AddCard extends Component {
         <Button
           title='Add Card'
           onPress={() => {this.handleSubmit()}}/>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
